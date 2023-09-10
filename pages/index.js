@@ -40,8 +40,6 @@ export default function Home() {
         <li>Fuel: {modelInfo.fuel}</li>
         <li>Power: {modelInfo.power} </li>
         <li>Max Speed: {modelInfo.max_Speed}</li>
-
-        <div>{modelInfo.image}</div>
       </div>
     )
   }
@@ -66,7 +64,7 @@ export default function Home() {
           <input type="submit" value="Get info" />
         </form>
         <div className={styles.result}>
-          {convertData(result.trim())}
+          {result && result !== '' ? convertData(result.trim()) : ''}
         </div>
       </main>
     </div>
