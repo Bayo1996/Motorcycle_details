@@ -5,6 +5,17 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+function generatePrompt(model) {
+  return `Get me the characteristics of the motorcycle model ${model}. Use this JSON
+  {
+    "engine": "string: engine cilinder"
+    "manufacturer": "string: motorcycle manufacturer"
+    "fuel": "string: fuel type used (premium, normal)"
+    "power": "string: max power of the motorcycle"
+    "max_Speed": "string. max speed"
+  }`;
+}
+
 export default async function (req, res) {
   if (!configuration.apiKey) {
     res.status(500).json({
@@ -29,11 +40,10 @@ export default async function (req, res) {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePrompt(model),
-      temperature: 0.2,
-      max_tokens: 40
+      temperature: 0.3,
+      max_tokens: 500
     });
     res.status(200).json({ result: completion.data.choices[0].text });
-    console.log(completion)
   } catch (error) {
     if (error.response) {
       console.error(error.response.status, error.response.data);
@@ -49,6 +59,3 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(model) {
-  return `Get me all the characteristics of the motorcycle model ${model} in ordered bullets`;
-}

@@ -30,6 +30,21 @@ export default function Home() {
     }
   }
 
+  const convertData = (result) => {
+    const modelInfo = JSON.parse(result);
+    return (
+      <div className={styles.result}>
+        <ul>Information</ul>
+        <li>Engine: {modelInfo.engine}</li>
+        <li>Manufacturer: {modelInfo.manufacturer}</li>
+        <li>Fuel: {modelInfo.fuel}</li>
+        <li>Power: {modelInfo.power} </li>
+        <li>Max Speed: {modelInfo.max_Speed}</li>
+
+        <div>{modelInfo.image}</div>
+      </div>
+    )
+  }
   return (
     <div>
       <Head>
@@ -50,7 +65,9 @@ export default function Home() {
           />
           <input type="submit" value="Get info" />
         </form>
-        <div className={styles.result}>{result}</div>
+        <div className={styles.result}>
+          {convertData(result.trim())}
+        </div>
       </main>
     </div>
   );
